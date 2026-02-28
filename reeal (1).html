@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>REEAL — Reel to Reality</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --bg: #0e0b08;
+  --surface: #161009;
+  --surface2: #1e1508;
+  --border: #2e2414;
+  --border2: #3a2e1a;
+  --gold: #e8a84a;
+  --gold2: #f0c070;
+  --rust: #c8613a;
+  --sage: #7a9e7e;
+  --text: #f2ede4;
+  --text2: #c4b89a;
+  --muted: #6a5c42;
+  --display: 'Cormorant Garamond', Georgia, serif;
+  --body: 'DM Sans', sans-serif;
+}
+html { scroll-behavior: smooth; }
+body { background: var(--bg); color: var(--text); font-family: var(--body); overflow-x: hidden; min-height: 100vh; }
+body::before {
+  content: ''; position: fixed; inset: 0; z-index: 9999; pointer-events: none;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 300 300' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+  opacity: 0.6;
+}
+body::after {
+  content: ''; position: fixed; top: 0; left: 50%; transform: translateX(-50%);
+  width: 900px; height: 400px;
+  background: radial-gradient(ellipse at top, rgba(232,168,74,0.06) 0%, transparent 65%);
+  pointer-events: none; z-index: 0;
+}
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 200;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 20px 52px;
+  background: rgba(14,11,8,0.82); border-bottom: 1px solid var(--border);
+  backdrop-filter: blur(18px);
+}
+.logo { font-family: var(--display); font-size: 26px; font-weight: 700; letter-spacing: 0.12em; color: var(--gold); text-shadow: 0 0 24px rgba(232,168,74,0.35); }
+.nav-links { display: flex; align-items: center; gap: 32px; }
+.nav-links a { font-size: 13px; font-weight: 400; letter-spacing: 0.04em; color: var(--muted); text-decoration: none; transition: color 0.25s; }
+.nav-links a:hover { color: var(--text2); }
+.nav-cta { border: 1px solid var(--border2); color: var(--gold); background: rgba(232,168,74,0.07); padding: 9px 22px; border-radius: 3px; font-size: 13px; font-weight: 500; letter-spacing: 0.05em; text-decoration: none; transition: background 0.25s, border-color 0.25s; }
+.nav-cta:hover { background: rgba(232,168,74,0.14); border-color: rgba(232,168,74,0.4); }
+.hero {
+  min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center;
+  padding: 110px 24px 70px; position: relative; overflow: hidden; text-align: center; z-index: 1;
+}
+.hero-horizon { position: absolute; bottom: 0; left: 0; right: 0; height: 200px; background: linear-gradient(to top, rgba(200,97,58,0.06), transparent); pointer-events: none; }
+.hero-badge {
+  display: inline-flex; align-items: center; gap: 10px;
+  font-size: 11px; font-weight: 500; letter-spacing: 0.22em; text-transform: uppercase;
+  color: var(--gold); border: 1px solid rgba(232,168,74,0.22); background: rgba(232,168,74,0.05);
+  padding: 7px 18px; border-radius: 40px; margin-bottom: 32px;
+  animation: fadeUp 0.7s ease both;
+}
+.badge-dot { width: 5px; height: 5px; border-radius: 50%; background: var(--gold); opacity: 0.7; animation: breathe 3s infinite; }
+@keyframes breathe { 0%,100%{opacity:0.7;transform:scale(1)}50%{opacity:0.3;transform:scale(0.8)} }
+.hero-title {
+  font-family: var(--display); font-size: clamp(88px, 20vw, 196px); font-weight: 700;
+  line-height: 0.88; letter-spacing: 0.08em; color: var(--gold);
+  text-shadow: 0 2px 40px rgba(232,168,74,0.22), 0 0 80px rgba(232,168,74,0.1);
+  margin-bottom: 20px; animation: fadeUp 0.7s 0.08s ease both;
+}
+.hero-tagline {
+  font-family: var(--display); font-size: clamp(17px, 2.4vw, 24px); font-weight: 400; font-style: italic;
+  color: var(--text2); line-height: 1.6; margin-bottom: 48px; max-width: 500px;
+  animation: fadeUp 0.7s 0.15s ease both;
+}
+.hero-tagline strong { font-style: normal; font-weight: 600; color: var(--text); }
+.hero-upload {
+  width: 100%; max-width: 580px; background: var(--surface);
+  border: 1px solid var(--border2); border-radius: 8px; overflow: hidden;
+  animation: fadeUp 0.7s 0.22s ease both; position: relative; z-index: 2;
+  box-shadow: 0 24px 64px rgba(0,0,0,0.5), 0 0 0 1px rgba(232,168,74,0.06);
+}
+.hero-upload::before {
+  content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
+  background: linear-gradient(to right, transparent, var(--gold), var(--rust), transparent); opacity: 0.5;
+}
+.upload-tabs { display: flex; border-bottom: 1px solid var(--border); }
+.tab { flex: 1; padding: 15px 20px; font-family: var(--body); font-size: 12px; font-weight: 500; letter-spacing: 0.07em; text-transform: uppercase; color: var(--muted); cursor: pointer; border: none; background: transparent; transition: color 0.25s, background 0.25s; border-bottom: 2px solid transparent; margin-bottom: -1px; }
+.tab.active { color: var(--gold); border-bottom-color: var(--gold); background: rgba(232,168,74,0.04); }
+.tab:hover:not(.active) { color: var(--text2); }
+.tab-panel { display: none; padding: 24px; }
+.tab-panel.active { display: block; }
+.platform-hints { display: flex; gap: 8px; margin-bottom: 14px; }
+.ph { font-size: 11px; font-weight: 500; letter-spacing: 0.07em; text-transform: uppercase; padding: 4px 11px; border-radius: 3px; border: 1px solid; }
+.ph-yt { color: #e05050; border-color: rgba(224,80,80,0.25); background: rgba(224,80,80,0.07); }
+.ph-ig { color: #d47090; border-color: rgba(212,112,144,0.25); background: rgba(212,112,144,0.07); }
+.url-row { display: flex; gap: 10px; margin-bottom: 12px; }
+.url-input { flex: 1; background: var(--bg); border: 1px solid var(--border); border-radius: 4px; padding: 13px 16px; font-family: var(--body); font-size: 14px; color: var(--text); outline: none; transition: border-color 0.25s, box-shadow 0.25s; }
+.url-input::placeholder { color: var(--muted); font-size: 13px; }
+.url-input:focus { border-color: rgba(232,168,74,0.45); box-shadow: 0 0 0 3px rgba(232,168,74,0.07); }
+.btn-add { background: rgba(232,168,74,0.12); color: var(--gold); border: 1px solid rgba(232,168,74,0.28); border-radius: 4px; padding: 13px 22px; font-family: var(--body); font-size: 13px; font-weight: 600; cursor: pointer; white-space: nowrap; transition: background 0.25s, border-color 0.25s; }
+.btn-add:hover { background: rgba(232,168,74,0.2); border-color: rgba(232,168,74,0.5); }
+.chips { display: flex; flex-wrap: wrap; gap: 8px; min-height: 0; }
+.chip { display: flex; align-items: center; gap: 6px; background: var(--surface2); border: 1px solid var(--border2); border-radius: 4px; padding: 5px 11px; font-size: 12px; color: var(--text2); animation: popIn 0.2s ease; }
+.chip-x { cursor: pointer; color: var(--muted); font-size: 16px; line-height: 1; margin-left: 2px; transition: color 0.2s; }
+.chip-x:hover { color: var(--rust); }
+.drop-zone { border: 1px dashed var(--border2); border-radius: 6px; padding: 36px 20px; text-align: center; cursor: pointer; position: relative; transition: border-color 0.25s, background 0.25s; }
+.drop-zone input { position: absolute; inset: 0; opacity: 0; cursor: pointer; width: 100%; height: 100%; }
+.drop-zone:hover, .drop-zone.drag-over { border-color: rgba(232,168,74,0.4); background: rgba(232,168,74,0.03); }
+.drop-icon { font-size: 30px; margin-bottom: 10px; }
+.drop-title { font-size: 15px; font-weight: 500; color: var(--text); margin-bottom: 4px; }
+.drop-sub { font-size: 12px; color: var(--muted); line-height: 1.6; }
+.drop-sub span { color: var(--gold2); }
+.files-list { display: flex; flex-direction: column; gap: 8px; margin-top: 12px; }
+.file-row { display: flex; align-items: center; gap: 10px; background: var(--surface2); border: 1px solid var(--border); border-radius: 4px; padding: 9px 13px; font-size: 12px; animation: popIn 0.2s ease; }
+.file-name { flex: 1; color: var(--text); font-weight: 500; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.file-sz { color: var(--muted); }
+.file-x { cursor: pointer; color: var(--muted); font-size: 16px; transition: color 0.2s; }
+.file-x:hover { color: var(--rust); }
+.gen-wrap { padding: 0 24px 24px; }
+.btn-gen { width: 100%; margin-top: 16px; background: linear-gradient(135deg, var(--gold) 0%, var(--rust) 100%); color: #0e0b08; border: none; border-radius: 5px; padding: 17px; font-family: var(--display); font-size: 22px; font-weight: 600; letter-spacing: 0.08em; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 10px; transition: opacity 0.25s, transform 0.2s, box-shadow 0.25s; }
+.btn-gen:hover { opacity: 0.92; transform: translateY(-2px); box-shadow: 0 12px 32px rgba(200,97,58,0.3); }
+.gen-note { font-size: 11px; color: var(--muted); margin-top: 10px; text-align: center; letter-spacing: 0.03em; line-height: 1.6; }
+.strip { overflow: hidden; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); background: var(--surface); padding: 16px 0; position: relative; }
+.strip::before, .strip::after { content: ''; position: absolute; top: 0; bottom: 0; width: 100px; z-index: 1; pointer-events: none; }
+.strip::before { left: 0; background: linear-gradient(to right, var(--surface), transparent); }
+.strip::after { right: 0; background: linear-gradient(to left, var(--surface), transparent); }
+.strip-track { display: flex; width: max-content; animation: marquee 30s linear infinite; }
+@keyframes marquee { from{transform:translateX(0)}to{transform:translateX(-50%)} }
+.strip-item { display: flex; align-items: center; gap: 10px; padding: 0 30px; white-space: nowrap; font-family: var(--display); font-style: italic; font-size: 15px; color: var(--muted); }
+.si { font-size: 17px; font-style: normal; }
+.how { padding: 90px 52px; max-width: 960px; margin: 0 auto; position: relative; z-index: 1; }
+.sec-eyebrow { font-size: 11px; font-weight: 500; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold); margin-bottom: 12px; }
+.sec-title { font-family: var(--display); font-size: clamp(36px, 5.5vw, 58px); font-weight: 600; color: var(--text); margin-bottom: 50px; line-height: 1.1; }
+.sec-title em { font-style: italic; color: var(--gold2); }
+.steps { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+.step { background: var(--surface); border: 1px solid var(--border); border-radius: 6px; padding: 32px 26px; position: relative; overflow: hidden; transition: border-color 0.3s, transform 0.3s; }
+.step:hover { border-color: rgba(232,168,74,0.3); transform: translateY(-3px); }
+.step::before { content: ''; position: absolute; left: 0; top: 20%; bottom: 20%; width: 2px; background: var(--sc, var(--gold)); opacity: 0; transition: opacity 0.3s; }
+.step:hover::before { opacity: 0.5; }
+.step-num { font-family: var(--display); font-size: 48px; font-weight: 700; color: var(--border2); margin-bottom: 14px; line-height: 1; }
+.step-ico { font-size: 24px; margin-bottom: 12px; }
+.step-name { font-size: 15px; font-weight: 600; color: var(--text); margin-bottom: 8px; }
+.step-desc { font-size: 13px; color: var(--muted); line-height: 1.7; }
+.sample { padding: 0 52px 90px; max-width: 960px; margin: 0 auto; position: relative; z-index: 1; }
+.out-card { display: grid; grid-template-columns: 1fr 1.4fr; background: var(--surface); border: 1px solid var(--border2); border-radius: 8px; overflow: hidden; margin-top: 48px; box-shadow: 0 20px 60px rgba(0,0,0,0.4); }
+.out-visual { background: linear-gradient(160deg, #1a120a 0%, #220d08 50%, #101a12 100%); min-height: 300px; display: flex; align-items: center; justify-content: center; flex-direction: column; gap: 8px; position: relative; overflow: hidden; }
+.out-visual::before { content: ''; position: absolute; inset: 0; background: radial-gradient(circle at 40% 60%, rgba(232,168,74,0.1), transparent 60%); }
+.out-big { font-size: 48px; position: relative; z-index: 1; }
+.out-reel-label { font-family: var(--display); font-size: 12px; font-style: italic; color: rgba(242,237,228,0.35); letter-spacing: 0.08em; z-index: 1; }
+.out-reel-url { font-size: 11px; color: rgba(242,237,228,0.18); z-index: 1; }
+.out-content { padding: 32px 30px; }
+.out-found { font-size: 10px; font-weight: 500; letter-spacing: 0.18em; text-transform: uppercase; color: var(--gold); margin-bottom: 8px; }
+.out-place { font-family: var(--display); font-size: 30px; font-weight: 700; color: var(--text); line-height: 1.1; margin-bottom: 6px; }
+.out-loc { font-size: 12px; color: var(--muted); margin-bottom: 18px; }
+.out-divider { height: 1px; background: var(--border); margin-bottom: 18px; }
+.out-plan-label { font-size: 10px; font-weight: 500; letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted); margin-bottom: 14px; }
+.day-list { display: flex; flex-direction: column; gap: 12px; }
+.day-row { display: flex; gap: 12px; align-items: flex-start; }
+.day-tag { background: rgba(232,168,74,0.1); color: var(--gold2); border: 1px solid rgba(232,168,74,0.2); border-radius: 3px; font-size: 10px; font-weight: 600; letter-spacing: 0.07em; padding: 4px 10px; flex-shrink: 0; margin-top: 2px; }
+.day-text { font-size: 13px; color: var(--muted); line-height: 1.6; }
+.day-text strong { color: var(--text2); font-weight: 600; }
+.day-unlock { color: var(--gold); cursor: pointer; }
+footer { background: var(--surface); border-top: 1px solid var(--border); padding: 44px 52px 36px; display: flex; align-items: flex-start; justify-content: space-between; flex-wrap: wrap; gap: 28px; position: relative; z-index: 1; }
+.footer-logo { font-family: var(--display); font-size: 28px; font-weight: 700; letter-spacing: 0.1em; color: var(--gold); text-shadow: 0 0 16px rgba(232,168,74,0.25); }
+.footer-sub { font-family: var(--display); font-style: italic; font-size: 13px; color: var(--muted); margin-top: 5px; }
+.footer-links { display: flex; gap: 28px; list-style: none; }
+.footer-links a { font-size: 12px; font-weight: 400; letter-spacing: 0.07em; text-transform: uppercase; color: var(--muted); text-decoration: none; transition: color 0.2s; }
+.footer-links a:hover { color: var(--text2); }
+.footer-copy { width: 100%; font-size: 11px; color: rgba(242,237,228,0.18); padding-top: 24px; border-top: 1px solid var(--border); }
+.overlay { position: fixed; inset: 0; background: rgba(14,11,8,0.9); z-index: 500; display: flex; align-items: center; justify-content: center; padding: 24px; opacity: 0; pointer-events: none; transition: opacity 0.3s; backdrop-filter: blur(12px); }
+.overlay.open { opacity: 1; pointer-events: all; }
+.modal { background: var(--surface); border: 1px solid var(--border2); border-radius: 8px; max-width: 460px; width: 100%; padding: 44px; transform: translateY(16px); transition: transform 0.35s; position: relative; text-align: center; box-shadow: 0 24px 80px rgba(0,0,0,0.6); }
+.overlay.open .modal { transform: none; }
+.modal-x { position: absolute; top: 16px; right: 18px; background: none; border: none; color: var(--muted); font-size: 20px; cursor: pointer; transition: color 0.2s; }
+.modal-x:hover { color: var(--rust); }
+.spin { width: 44px; height: 44px; border-radius: 50%; border: 2px solid var(--border2); border-top-color: var(--gold); animation: rotate 0.9s linear infinite; margin: 0 auto 20px; }
+@keyframes rotate { to{transform:rotate(360deg)} }
+.modal-title { font-family: var(--display); font-size: 26px; font-weight: 600; color: var(--text); margin-bottom: 6px; }
+.modal-sub { font-size: 13px; color: var(--muted); margin-bottom: 24px; line-height: 1.7; }
+.modal-steps { text-align: left; background: var(--surface2); border-radius: 5px; padding: 16px 18px; display: flex; flex-direction: column; gap: 12px; }
+.mstep { font-size: 13px; color: var(--muted); display: flex; align-items: center; gap: 10px; transition: color 0.4s; }
+.mstep.done { color: var(--gold2); }
+@keyframes fadeUp { from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:none} }
+@keyframes popIn  { from{opacity:0;transform:scale(0.88)}to{opacity:1;transform:scale(1)} }
+.reveal { opacity:0; transform:translateY(22px); transition:opacity 0.7s ease, transform 0.7s ease; }
+.reveal.vis { opacity:1; transform:none; }
+@media(max-width:768px){
+  nav{padding:16px 20px;} .nav-links{display:none;}
+  .hero{padding:90px 16px 56px;}
+  .how,.sample{padding:64px 20px;}
+  .steps{grid-template-columns:1fr;}
+  .out-card{grid-template-columns:1fr;}
+  footer{padding:36px 20px;flex-direction:column;}
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="logo">REEAL</div>
+  <div class="nav-links">
+    <a href="#how">How it works</a>
+    <a href="#sample">Example</a>
+    <a href="#" class="nav-cta">Get early access</a>
+  </div>
+</nav>
+
+<section class="hero">
+  <div class="hero-horizon"></div>
+  <div class="hero-badge"><div class="badge-dot"></div>AI-powered travel planner</div>
+  <h1 class="hero-title">REEAL</h1>
+  <p class="hero-tagline">Every reel hides a real place.<br><strong>We find it. We plan your trip there.</strong></p>
+
+  <div class="hero-upload">
+    <div class="upload-tabs">
+      <button class="tab active" onclick="switchTab('url',this)">🔗 &nbsp;Paste a link</button>
+      <button class="tab" onclick="switchTab('file',this)">🎞️ &nbsp;Upload video</button>
+    </div>
+    <div class="tab-panel active" id="tab-url">
+      <div class="platform-hints">
+        <span class="ph ph-yt">▶ YouTube</span>
+        <span class="ph ph-ig">◈ Instagram</span>
+      </div>
+      <div class="url-row">
+        <input class="url-input" id="urlInput" type="url" placeholder="Paste a YouTube or Instagram reel link…" autocomplete="off">
+        <button class="btn-add" onclick="addUrl()">Add</button>
+      </div>
+      <div class="chips" id="urlChips"></div>
+    </div>
+    <div class="tab-panel" id="tab-file">
+      <div class="drop-zone" id="dropZone">
+        <input type="file" id="fileInput" accept="video/*" multiple onchange="handleFiles(this.files)">
+        <div class="drop-icon">🎞️</div>
+        <div class="drop-title">Drop your reel here</div>
+        <p class="drop-sub">Supports <span>MP4, MOV, AVI</span> &nbsp;·&nbsp; up to <span>500 MB</span></p>
+      </div>
+      <div class="files-list" id="fileList"></div>
+    </div>
+    <div class="gen-wrap">
+      <button class="btn-gen" onclick="generate()">Plan My Trip &nbsp;→</button>
+      <p class="gen-note">Free to try &nbsp;·&nbsp; No account needed &nbsp;·&nbsp; Ready in ~15 seconds</p>
+    </div>
+  </div>
+</section>
+
+<div class="strip"><div class="strip-track" id="stripTrack"></div></div>
+
+<section class="how" id="how">
+  <div class="sec-eyebrow reveal">The journey</div>
+  <h2 class="sec-title reveal">From reel to <em>real adventure.</em></h2>
+  <div class="steps">
+    <div class="step reveal" style="--sc:var(--gold)">
+      <div class="step-num">01</div>
+      <div class="step-ico">🎬</div>
+      <div class="step-name">Share a reel</div>
+      <p class="step-desc">Paste a YouTube or Instagram link — or upload a clip. Any video that made you think "I need to go there."</p>
+    </div>
+    <div class="step reveal" style="--sc:var(--sage);transition-delay:0.12s">
+      <div class="step-num">02</div>
+      <div class="step-ico">🌍</div>
+      <div class="step-name">We find the place</div>
+      <p class="step-desc">Our AI reads visuals, sounds, captions, and tags to identify the exact destination — down to the neighborhood.</p>
+    </div>
+    <div class="step reveal" style="--sc:var(--rust);transition-delay:0.24s">
+      <div class="step-num">03</div>
+      <div class="step-ico">🗺️</div>
+      <div class="step-name">Get your itinerary</div>
+      <p class="step-desc">A personalised day-by-day travel plan shaped around your budget, travel style, and the mood of the reel.</p>
+    </div>
+  </div>
+</section>
+
+<section class="sample" id="sample">
+  <div class="sec-eyebrow reveal">Sample plan</div>
+  <h2 class="sec-title reveal">What you'll <em>receive.</em></h2>
+  <div class="out-card reveal">
+    <div class="out-visual">
+      <div class="out-big">🎬</div>
+      <div class="out-reel-label">Instagram Reel</div>
+      <div class="out-reel-url">instagram.com/reel/CxK2j…</div>
+    </div>
+    <div class="out-content">
+      <div class="out-found">✦ Destination identified</div>
+      <div class="out-place">Chefchaouen,<br>Morocco</div>
+      <div class="out-loc">📍 Rif Mountains, Northern Morocco</div>
+      <div class="out-divider"></div>
+      <div class="out-plan-label">7-day itinerary &nbsp;·&nbsp; Mid-range &nbsp;·&nbsp; Couple</div>
+      <div class="day-list">
+        <div class="day-row"><div class="day-tag">Day 1</div><div class="day-text"><strong>Arrive & wander the Blue Medina.</strong> Check into a riad, explore the square at golden hour.</div></div>
+        <div class="day-row"><div class="day-tag">Day 2</div><div class="day-text"><strong>Hike to the Spanish Mosque</strong> for sunrise panoramas, then an afternoon cooking class.</div></div>
+        <div class="day-row"><div class="day-tag">Day 3</div><div class="day-text"><strong>Day trip to Akchour Waterfalls</strong> — swim in natural pools and return by sunset.</div></div>
+        <div class="day-row"><div class="day-tag">+ 4 more</div><div class="day-text day-unlock" onclick="generate()">Generate your plan to unlock the full itinerary →</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div>
+    <div class="footer-logo">REEAL</div>
+    <div class="footer-sub">Your reel. Your next adventure.</div>
+  </div>
+  <ul class="footer-links">
+    <li><a href="#">About</a></li>
+    <li><a href="#">Privacy</a></li>
+    <li><a href="#">Contact</a></li>
+    <li><a href="#">Instagram</a></li>
+  </ul>
+  <div class="footer-copy">© 2025 REEAL. Not affiliated with YouTube, Instagram, or Meta.</div>
+</footer>
+
+<div class="overlay" id="overlay" onclick="closeOv(event)">
+  <div class="modal">
+    <button class="modal-x" onclick="document.getElementById('overlay').classList.remove('open')">✕</button>
+    <div id="modalBody">
+      <div class="spin"></div>
+      <div class="modal-title">Decoding your reel…</div>
+      <div class="modal-sub">Identifying the destination and crafting your itinerary.</div>
+      <div class="modal-steps">
+        <div class="mstep done" id="ms1"><span>🎬</span> Analyzing visual & audio cues…</div>
+        <div class="mstep" id="ms2"><span>📍</span> Matching to location database…</div>
+        <div class="mstep" id="ms3"><span>🗓️</span> Building personalized itinerary…</div>
+        <div class="mstep" id="ms4"><span>✅</span> Finalizing your travel plan…</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+function switchTab(name, btn) {
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+  btn.classList.add('active');
+  document.getElementById('tab-' + name).classList.add('active');
+}
+const urls = [];
+function addUrl() {
+  const inp = document.getElementById('urlInput');
+  const val = inp.value.trim();
+  if (!val) return;
+  const isYT = val.includes('youtube.com') || val.includes('youtu.be');
+  const isIG = val.includes('instagram.com');
+  if (!isYT && !isIG) {
+    inp.style.borderColor = 'rgba(200,97,58,0.6)'; inp.style.boxShadow = '0 0 0 3px rgba(200,97,58,0.09)';
+    setTimeout(() => { inp.style.borderColor = ''; inp.style.boxShadow = ''; }, 1800); return;
+  }
+  urls.push({ url: val, type: isYT ? '▶' : '◈' });
+  inp.value = ''; renderChips();
+}
+document.getElementById('urlInput').addEventListener('keydown', e => { if (e.key === 'Enter') addUrl(); });
+function renderChips() {
+  document.getElementById('urlChips').innerHTML = urls.map((u,i) =>
+    `<div class="chip"><span>${u.type}</span><span>${u.url.length>42?u.url.slice(0,42)+'…':u.url}</span><span class="chip-x" onclick="removeUrl(${i})">×</span></div>`
+  ).join('');
+}
+function removeUrl(i) { urls.splice(i,1); renderChips(); }
+const dz = document.getElementById('dropZone');
+dz.addEventListener('dragover', e => { e.preventDefault(); dz.classList.add('drag-over'); });
+dz.addEventListener('dragleave', () => dz.classList.remove('drag-over'));
+dz.addEventListener('drop', e => { e.preventDefault(); dz.classList.remove('drag-over'); handleFiles(e.dataTransfer.files); });
+const files = [];
+function handleFiles(fl) { Array.from(fl).forEach(f => files.push(f)); renderFiles(); }
+function renderFiles() {
+  document.getElementById('fileList').innerHTML = files.map((f,i) =>
+    `<div class="file-row"><span>🎞️</span><span class="file-name">${f.name}</span><span class="file-sz">${(f.size/1024/1024).toFixed(1)} MB</span><span class="file-x" onclick="removeFile(${i})">×</span></div>`
+  ).join('');
+}
+function removeFile(i) { files.splice(i,1); renderFiles(); }
+function generate() {
+  if (urls.length===0 && files.length===0) {
+    const inp = document.getElementById('urlInput'); inp.focus();
+    inp.style.borderColor = 'rgba(200,97,58,0.6)'; inp.style.boxShadow = '0 0 0 3px rgba(200,97,58,0.09)';
+    setTimeout(() => { inp.style.borderColor=''; inp.style.boxShadow=''; }, 2000); return;
+  }
+  document.getElementById('overlay').classList.add('open');
+  ['ms2','ms3','ms4'].forEach((id,i) => setTimeout(() => document.getElementById(id).classList.add('done'), (i+1)*1400));
+  setTimeout(() => {
+    document.getElementById('modalBody').innerHTML = `
+      <div style="font-size:50px;margin-bottom:16px">🗺️</div>
+      <div class="modal-title">Your plan is ready</div>
+      <div class="modal-sub">We found the destination and crafted your personalised itinerary.</div>
+      <div style="display:flex;gap:10px;margin-top:8px;">
+        <button onclick="document.getElementById('overlay').classList.remove('open');document.getElementById('sample').scrollIntoView({behavior:'smooth'})"
+          style="flex:1;background:linear-gradient(135deg,var(--gold),var(--rust));color:#0e0b08;border:none;border-radius:4px;padding:14px;font-family:var(--display);font-size:17px;font-weight:600;cursor:pointer;letter-spacing:0.04em;">View my plan</button>
+        <button onclick="document.getElementById('overlay').classList.remove('open')"
+          style="flex:1;background:var(--surface2);color:var(--text2);border:1px solid var(--border2);border-radius:4px;padding:14px;font-family:var(--body);font-size:14px;cursor:pointer;">Close</button>
+      </div>`;
+  }, 5600);
+}
+function closeOv(e) { if (e.target===document.getElementById('overlay')) document.getElementById('overlay').classList.remove('open'); }
+const places=[{i:'🏯',n:'Kyoto, Japan'},{i:'🏜️',n:'Sahara Desert'},{i:'🗼',n:'Paris, France'},{i:'🏔️',n:'Patagonia'},{i:'🌺',n:'Bali, Indonesia'},{i:'🏛️',n:'Rome, Italy'},{i:'🌊',n:'Amalfi Coast'},{i:'🗻',n:'Nepal'},{i:'🦁',n:'Serengeti'},{i:'🏝️',n:'Maldives'}];
+const track=document.getElementById('stripTrack');
+track.innerHTML=[...places,...places].map(p=>`<div class="strip-item"><span class="si">${p.i}</span>${p.n}<span style="margin-left:10px;opacity:0.3">·</span></div>`).join('');
+const obs=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('vis');obs.unobserve(e.target);}}),{threshold:0.12});
+document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
+</script>
+</body>
+</html>
